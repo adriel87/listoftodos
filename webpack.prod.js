@@ -3,6 +3,7 @@ const MiniCssExtract    = require('mini-css-extract-plugin');
 const copyPlugin        = require('copy-webpack-plugin');
 const cssMini           = require('css-minimizer-webpack-plugin');
 const terser            = require('terser-webpack-plugin');
+const path              = require('path')
 
 module.exports={
 
@@ -11,7 +12,8 @@ module.exports={
     output: {
         clean: true,
         filename:'main.[contenthash].js',
-        assetModuleFilename: 'images/holi[ext][query]'
+        assetModuleFilename: 'images/holi[ext][query]',
+        path: path.resolve(__dirname, 'docs'),
     },
     module:{
         rules:[
