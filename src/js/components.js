@@ -8,13 +8,17 @@ const textNewTask   = document.body.querySelector('.new-todo');
 
 const deleteAll     = document.body.querySelector('.clear-completed'); 
 
+const filters       = document.body.querySelector('.filters');
+
+const anchorFilter  = document.body.querySelectorAll('.filtro')
+
 // const toggleTask = document.body.querySelector('.toggle');
 
 export const makeTodoHTML = ( todo )=>{
 
 
 
-    const HTMLTodo = `<li class="${ (todo.completado)? 'complete':''}" data-id="${todo.id}">
+    const HTMLTodo = `<li class="${ (todo.completado)? 'completed':''}" data-id="${todo.id}">
     <div class="view">
         <input class="toggle" type="checkbox" ${(todo.completado)?'checked':''}>
         <label>${todo.tarea}</label>
@@ -45,7 +49,6 @@ textNewTask.addEventListener('keyup', (event) =>{
     if(event.code === 'Enter' && textNewTask.value.length > 0){
         const newTodo = new Todo(textNewTask.value);
         todoList.newTodo(newTodo);
-        console.log({todoList})
         makeTodoHTML(newTodo);
         textNewTask.value="";
     }
@@ -84,5 +87,45 @@ deleteAll.addEventListener('click', (event)=>{
     };
 
 });
+
+filters.addEventListener('click', (event)=>{
+   
+
+    const filter = event.target.text;
+
+    if(!filter){ return }
+
+    anchorFilter.forEach(element => {
+        element.classList.remove('selected')
+    });
+
+    event.target.classList.add('selected')
+    for(const element of divTodoList.children){
+        
+        element.classList.remove('hidden');
+
+        switch (filter) {
+            case 'Pendientes':
+                if (element.classList.contains('completed')) {
+                    element.classList.add('hidden')
+                }
+                break;
+        case 'Completados':
+                if(!element.classList.contains('completed')){
+                    element.classList.add('hidden')
+                }
+            console.log('completado');
+            break;
+            // case 'Todos':
+            //     element.classList.remove('hidden');
+            //     console.log('todos');
+            //     break;
+            // default:
+            //     break;
+        }
+        
+    }
+    
+})
 
 
